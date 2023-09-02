@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required:[true, 'Please provide a password'],
         minlength: 6,
+        maxlength: 500
     },
     friends:{
         type: [mongoose.Types.ObjectId],
@@ -34,18 +35,21 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-userSchema.pre('save', async function(){
-    const salt = await bcrypt.genSalt(9);
+userSchema.pre('save', async function (){
+
+    const salt = await bcrypt.genSalt(10);
+    console.log(this.password)
     this.password = await bcrypt.hash(this.password, salt)
+    console.log(this.password)
 })
 
 userSchema.methods.createJWT = function(){
     return jwt.sign({userId:this._id, name:this.name}, process.env.SECRET_KEY,{expiresIn:process.env.SECRET_TIME,})
 }
 
-userSchema.methods.verify = async function(userPassword){
-    const check = await bcrypt.compare(userPassword, this.password)
-    return check
+userSchema.methods.comparePassword = async function (userPassword){
+    const compare = await bcrypt.compare(userPassword, this.password)
+    return compare
 }
 
 module.exports = mongoose.model('User', userSchema)

@@ -20,12 +20,16 @@ const login = async (req, res)=> {
     }
 
     const user = await User.findOne({email})
+    console.log(user.name, user.password, user.email)
     if(!user){
         throw new Error('Invalid Credentials')
     }
 
-    const check = await user.verify(password)
-    if(!check){
+    console.log(password)
+    const passwordCheck = await user.comparePassword(password)
+    console.log(passwordCheck)
+    if(!passwordCheck){
+        console.log('error in password verification')
         throw new Error('Invalid Credentials')
     }
 

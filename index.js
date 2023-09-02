@@ -11,7 +11,7 @@ const eRateLimit = require('express-rate-limit')
 //others
 const connectDB = require('./db/connect')
 const auth_R = require('./routes/auth_R')
-const auth = require('./middleware/authentication')
+// const auth = require('./middleware/authentication')
 const express = require('express');
 const app = express();
 

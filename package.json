@@ -18,6 +18,7 @@
     "express-rate-limit": "^6.10.0",
     "helmet": "^7.0.0",
     "http-status-codes": "^2.2.0",
+    "joi": "^17.10.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.5.0",
     "xss-clean": "^0.1.4",
