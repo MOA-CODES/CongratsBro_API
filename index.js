@@ -10,7 +10,8 @@ const eRateLimit = require('express-rate-limit')
 
 //others
 const connectDB = require('./db/connect')
-
+const auth_R = require('./routes/auth_R')
+const auth = require('./middleware/authentication')
 const express = require('express');
 const app = express();
 
@@ -28,6 +29,8 @@ connectDB()
 app.get('/', (req, res)=>{
     res.send('CongratsBro API')
 })
+
+app.use('/api/v1/auth', auth_R)
 
 app.listen(port ,()=>{
     console.log(`listening on port ${port}`)

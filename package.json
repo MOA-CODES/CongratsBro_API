@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "work": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
@@ -21,5 +22,8 @@
     "mongoose": "^7.5.0",
     "xss-clean": "^0.1.4",
     "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
