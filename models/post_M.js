@@ -2,13 +2,21 @@ const mongoose = require('mongoose');
 
 const PostSchema = new mongoose.Schema({
 
-    name:{
+    title:{
         type: String,
         required: [true, 'Name is required'],
+        minlength:3,
+        maxLength: 30
     },
     content:{
         type: String,
         required: [true, 'provide context to this post'],
+        minlength:15,
+        maxLength: 150
+    },
+    user:{
+        type:String,
+        ref:'User',
     },
     postedBy:{
         type: mongoose.Types.ObjectId,
