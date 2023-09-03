@@ -10,7 +10,7 @@ const register = async (req, res)=> {
     //i think this causes the double hashing problem
 
     const token = user.createJWT()
-    res.status(StatusCodes.CREATED).json({user:{name: user.name}, token})
+    res.status(StatusCodes.CREATED).json({user:{name: user.name, _id: user._id}, token})
 }
 
 const login = async (req, res)=> {
@@ -32,7 +32,7 @@ const login = async (req, res)=> {
     }
 
     const token = user.createJWT()
-    res.status(StatusCodes.OK).json({user:{name: user.name,login:"sucessful"},token})
+    res.status(StatusCodes.OK).json({user:{name: user.name,_id: user._id,login:"sucessful"},token})
 }
 
 module.exports = {register, login}
