@@ -5,8 +5,9 @@ const register = async (req, res)=> {
     const user = await User.create({...req.body})
 
     //automatically has himself as a friend to see his own posts 
-    await User.findOneAndUpdate({email: user.email}, user.friends.push(user._id) ,{new:true, runValidators:true} )
-    user.save(user)
+    // await User.findOneAndUpdate({email: user.email}, user.friends.push(user._id) ,{new:true, runValidators:true} )
+    // user.save(user)
+    //i think this causes the double hashing problem
 
     const token = user.createJWT()
     res.status(StatusCodes.CREATED).json({user:{name: user.name}, token})
@@ -25,9 +26,7 @@ const login = async (req, res)=> {
         throw new Error('Invalid Credentials')
     }
 
-    console.log(password)
     const passwordCheck = await user.comparePassword(password)
-    console.log(passwordCheck)
     if(!passwordCheck){
         console.log('error in password verification')
         throw new Error('Invalid Credentials')

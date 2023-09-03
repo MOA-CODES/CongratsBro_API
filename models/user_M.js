@@ -24,10 +24,9 @@ const userSchema = new mongoose.Schema({
 
     },
     password:{
-        type: String,
+        type:String,
         required:[true, 'Please provide a password'],
         minlength: 6,
-        maxlength: 500
     },
     friends:{
         type: [mongoose.Types.ObjectId],
@@ -36,11 +35,14 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.pre('save', async function (){
+    //automatically has himself as a friend to see his own posts 
+    // await User.findOneAndUpdate({email: user.email}, user.friends.push(user._id) ,{new:true, runValidators:true} )
+    // user.save(user)
+    this.friends.push(this._id)
 
     const salt = await bcrypt.genSalt(10);
-    console.log(this.password)
     this.password = await bcrypt.hash(this.password, salt)
-    console.log(this.password)
+   
 })
 
 userSchema.methods.createJWT = function(){
