@@ -31,8 +31,10 @@ const userSchema = new mongoose.Schema({
     friends:{
         type: [mongoose.Types.ObjectId],
         ref: 'User',
+        unique: true,
+
     }
-})
+},{timestamps:true})
 
 userSchema.pre('save', async function (){
     //automatically has himself as a friend to see his own posts 
