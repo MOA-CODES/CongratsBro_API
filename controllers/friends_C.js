@@ -40,7 +40,7 @@ const removeFriend = async (req,  res) => {
         }
 
         if(unaddFriend === userId ){ //you can't unadd yourself
-            throw new Error(`you don't have the authorization to do that. ${StatusCodes.BAD_REQUEST}`)
+            throw new Error(`Why would you want to commit suicide? \n you dont have the authorization to do that. ${StatusCodes.BAD_REQUEST}`)
         }
 
     const user = await User.findByIdAndUpdate(userId, {'$pull':{'friends':doesFriendexist._id}},{new:true, runValidators:true})
