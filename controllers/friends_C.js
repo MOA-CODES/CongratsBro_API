@@ -17,7 +17,7 @@ const addFriend = async (req, res) => {
 
 //having an issue updating friend list
 
-   const user = await User.findByIdAndUpdate(userId, friends.push(doesFriendexist._id),{new:true, runValidators:true});
+   const user = await User.findByIdAndUpdate(userId, {'$push':{'friends':doesFriendexist._id}},{new:true, runValidators:true});
 
    res.status(StatusCodes.OK).json({msg: `friend with id ${newFriend}, added successfully`, noFriends:user.friends.length ,newFriendlist: user.friends})
 
