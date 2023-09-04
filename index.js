@@ -12,6 +12,7 @@ const eRateLimit = require('express-rate-limit')
 const connectDB = require('./db/connect')
 const auth_R = require('./routes/auth_R')
 const posts_R = require('./routes/posts_R')
+const friends_R = require('./routes/friends_R')
 const auth = require('./middleware/authentication')
 const express = require('express');
 const app = express();
@@ -33,6 +34,8 @@ app.get('/', (req, res)=>{
 
 app.use('/api/v1/auth', auth_R)
 app.use('/api/v1/posts', auth, posts_R)
+app.use('/api/v1/friends', auth, friends_R)
+
 
 app.listen(port ,()=>{
     console.log(`listening on port ${port}`)
