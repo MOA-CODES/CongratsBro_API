@@ -1,5 +1,6 @@
 const Post = require('../models/post_M')
 const {StatusCodes} = require('http-status-codes')
+const customError = require('../middleware/customError')
 
 const createPost = async (req, res)=>{
     req.body.postedBy = req.user.userId
@@ -21,13 +22,13 @@ const editPost = async (req, res)=>{
     }
 
     if((!(whatToEdit.title)|| !(whatToEdit.content))||((whatToEdit.title === '')|| (whatToEdit.content === ''))){
-        throw new Error("content or title fields can't be empty")
+        throw new customError("content or title fields can't be empty", StatusCodes.BAD_REQUEST)
     }
 
     const post = await Post.findOneAndUpdate({ _id:postId, postedBy:userId}, whatToEdit,{new:true, runValidators:true})
 
     if(!post){
-        throw new Error(`No Post with id + ${postId} exists`)
+        throw new customError(`No Post with id + ${postId} exists`, StatusCodes.NOT_FOUND)
     }
 
     res.status(StatusCodes.OK).json({msg:'edited successfully', editedPost:post})
@@ -40,7 +41,7 @@ const deletePost = async (req, res)=>{
     const post = await Post.findOneAndDelete({_id:postId, postedBy:userId})
 
     if(!post){
-        throw new Error(`No Post with id + ${postId} exists`)
+        throw new customError(`No Post with id + ${postId} exists`, StatusCodes.NOT_FOUND)
     }
 
     res.status(StatusCodes.OK).json({PostTitle:post.title, msg:'deleted successfully',})
@@ -53,7 +54,7 @@ const getSinglePost = async (req, res)=>{
     const post = await Post.find({_id:postId})
 
     if(!post){
-        throw new Error(`No Post with id + ${postId} exists`)
+        throw new customError(`No Post with id + ${postId} exists`, StatusCodes.NOT_FOUND)
     }
 
     res.status(StatusCodes.OK).json({post})
@@ -78,7 +79,7 @@ const getMyPosts = async (req, res)=>{
     const paramsuserId = req.params.uid
 
     if(!(paramsuserId === userId)) {
-        throw new Error('Authentication Invalid')
+        throw new customError('Authentication Invalid', StatusCodes.UNAUTHORIZED)
     }
 
     const posts = await Post.find({postedBy:userId})   
