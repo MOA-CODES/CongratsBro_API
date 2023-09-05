@@ -41,7 +41,7 @@ const deletePost = async (req, res)=>{
     const post = await Post.findOneAndDelete({_id:postId, postedBy:userId})
 
     if(!post){
-        throw new customError(`No Post with id + ${postId} exists`, StatusCodes.NOT_FOUND)
+        throw new customError(`No Post of yours with id + ${postId} exists`, StatusCodes.NOT_FOUND)
     }
 
     res.status(StatusCodes.OK).json({PostTitle:post.title, msg:'deleted successfully',})
