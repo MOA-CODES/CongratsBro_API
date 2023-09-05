@@ -54,7 +54,7 @@ const getSinglePost = async (req, res)=>{
     const post = await Post.find({_id:postId})
 
     if(!post){
-        throw new customError(`No Post with id + ${postId} exists`, StatusCodes.NOT_FOUND)
+        throw new customError(`No Post with id ${postId} exists`, StatusCodes.NOT_FOUND)
     }
 
     res.status(StatusCodes.OK).json({post})
