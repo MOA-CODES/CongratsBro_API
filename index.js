@@ -8,6 +8,9 @@ const cors = require('cors')
 const xss = require('xss-clean')
 const eRateLimit = require('express-rate-limit')
 
+//swagger ui for documentation
+
+
 //others
 const connectDB = require('./db/connect') //db
 
@@ -23,6 +26,8 @@ const express = require('express');
 const app = express();
 
 const port = process.env.PORT||4000
+
+
 
 //app
 
