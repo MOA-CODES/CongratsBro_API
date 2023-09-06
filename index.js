@@ -47,13 +47,10 @@ connectDB()
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc,{customCssUrl:swaggerCss}))
 app.get('/', (req, res)=>{
-    res.send('CongratsBro API')
-
-    res.send('\
+    res.send('<center>\
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"\
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"crossorigin="anonymous" />\
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"rel="stylesheet" />\
-    <h1>CongratsBro API</h1><p>This is an API for making posts relating to your achievements, connecting with friends and also viewing their posts </p>\
+    <h1>CongratsBro API</h1><p>This is a Backend API for making posts relating to your achievements, connecting with friends and also viewing their posts </p>\
     <p>There is no front-end currently for the app, its a purely a backend app</p>\
     <p></p>\
     <p>At the end of this websites URL attach:</p>\
@@ -62,7 +59,8 @@ app.get('/', (req, res)=>{
     <li>/api/v1/friends for friends routes</li>\
     <p></p>\
     <p><i><u><a href="/api-docs">for more detailed documentation click here</a></i></u></p>\
-    <h3><p><b>Made by <i><a href="https://github.com/MOA-CODES">MOA-CODES</a></i></b></P></h3>')
+    <h3><p><b>Made by <i><a href="https://github.com/MOA-CODES">MOA-CODES</a></i></b></P></h3>\
+    </center>')
 })
 
 app.use('/api/v1/auth', auth_R)
