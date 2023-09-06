@@ -21,7 +21,7 @@ const swaggerCss = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swag
 //others
 const connectDB = require('./db/connect') //db
 
-const favicon = require('serve-favicon')
+const favicon = require('express-favicon')//icon
 
 const auth_R = require('./routes/auth_R') //routes
 const posts_R = require('./routes/posts_R') 
@@ -43,7 +43,7 @@ app.use(cors())
 app.use(helmet())
 app.use(express.json())
 
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+app.use(favicon(path.resolve(__dirname + '/public/favicon.ico')))//icon
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc,{customCssUrl:swaggerCss}))
 app.get('/', (req, res)=>{
