@@ -59,6 +59,10 @@ app.get('/', (req, res)=>{
     <li>/api/v1/friends for friends routes</li>\
     <p></p>\
     <p><i><u><a href="/api-docs">for more detailed documentation click here</a></i></u></p>\
+    <p><b>*NOTE: when you make use of the api docs above, anytime you receive a token in your response body go to the authorize button at top-right corner\
+    click on it and paste it in the value field, also keep in mind the user and posts you create are stored</b></p>\
+    <p></p>\
+    <p></p>\
     <h3><p><b>Made by <i><a href="https://github.com/MOA-CODES">MOA-CODES</a></i></b></P></h3>\
     </center>')
 })
