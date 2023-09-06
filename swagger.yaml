@@ -113,7 +113,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: integer
+          type: String
         required: true
         description: The post ID
     patch:
@@ -177,7 +177,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: integer
+          type: String
         required: true
         description: The user ID
     get:
@@ -213,7 +213,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: integer
+          type: String
         required: true
         description: The user ID
     get:
@@ -235,7 +235,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: integer
+          type: String
         required: true
         description: The user ID
     patch:
@@ -256,7 +256,7 @@ paths:
       - in: path
         name: id
         schema:
-          type: integer
+          type: String
         required: true
         description: The user ID
     patch:
