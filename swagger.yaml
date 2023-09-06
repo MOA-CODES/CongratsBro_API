@@ -1,0 +1,349 @@
+openapi: 3.0.0
+info:
+  title: CB-api
+  contact:
+    name: MOA
+    url: https://github.com/MOA-CODES
+    email: moa.businessbread@gmail.com
+  version: '1.0'
+servers:
+- url: <place the correct url here>
+  variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+      - Auth
+      summary: Register user
+      operationId: Registeruser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/RegisteruserRequest'
+              - example:
+                  name: Person7
+                  email: person7@gmail.com
+                  password: password
+            example:
+              name: Person7
+              email: person7@gmail.com
+              password: password
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+      - Auth
+      summary: Login user
+      operationId: Loginuser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/LoginuserRequest'
+              - example:
+                  email: person3@gmail.com
+                  password: password
+            example:
+              email: person3@gmail.com
+              password: password
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /posts:
+    post:
+      tags:
+      - Posts
+      summary: Create post
+      operationId: Createpost
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/CreatepostRequest'
+              - example:
+                  title: American Football
+                  content: I'm actually really interested in playing American football
+            example:
+              title: American Football
+              content: I'm actually really interested in playing American football
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+    get:
+      tags:
+      - Posts
+      summary: Get posts
+      description: You get your posts and your friends posts with this route
+      operationId: Getposts
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /posts/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: The post ID
+    patch:
+      tags:
+      - Posts
+      summary: Edit post
+      operationId: Editpost
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/EditpostRequest'
+              - example:
+                  title: I Got admitted2
+                  content: Yo guys i got admitted to the uni i wanted2
+            example:
+              title: I Got admitted2
+              content: Yo guys i got admitted to the uni i wanted2
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+
+    delete:
+      tags:
+      - Posts
+      summary: Delete post
+      operationId: Deletepost
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+
+    get:
+      tags:
+      - Posts
+      summary: Get single post
+      description: The ID in the route example is a post id
+      operationId: Getsinglepost
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /posts/user/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: The user ID
+    get:
+      tags:
+      - Posts
+      summary: Get my posts
+      description: You retrieve your own posts, the ID placed in the route example is that of a logged-in user's ID and not a post ID.
+      operationId: Getmyposts
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /friends:
+    get:
+      tags:
+      - Friends
+      summary: Get all friends
+      operationId: Getallfriends
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /friends/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: The user ID
+    get:
+      tags:
+      - Friends
+      summary: Get a friend/user
+      description: You a users details and post with this route
+      operationId: Getafriend/user
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /friends/add/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: The user ID
+    patch:
+      tags:
+      - Friends
+      summary: Add a friend
+      operationId: Addafriend
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /friends/unadd/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: The user ID
+    patch:
+      tags:
+      - Friends
+      summary: Remove a friend
+      operationId: Removeafriend
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+components:
+  schemas:
+    RegisteruserRequest:
+      title: RegisteruserRequest
+      required:
+      - name
+      - email
+      - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: Person7
+        email: person7@gmail.com
+        password: password
+    LoginuserRequest:
+      title: LoginuserRequest
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: person3@gmail.com
+        password: password
+    CreatepostRequest:
+      title: CreatepostRequest
+      required:
+      - title
+      - content
+      type: object
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+      example:
+        title: American Football
+        content: I'm actually really interested in playing American football
+    EditpostRequest:
+      title: EditpostRequest
+      required:
+      - title
+      - content
+      type: object
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+      example:
+        title: I Got admitted2
+        content: Yo guys i got admitted to the uni i wanted2
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+
+- name: Auth
+  description: ''
+- name: Posts
+  description: ''
+- name: Friends
+  description: ''

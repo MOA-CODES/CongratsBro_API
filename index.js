@@ -9,7 +9,14 @@ const xss = require('xss-clean')
 const eRateLimit = require('express-rate-limit')
 
 //swagger ui for documentation
+const swaggerUI = require('swagger-ui-express')
+const YAML = require('yamljs')
 
+var path = require('path')
+var swaggerPath = path.resolve(__dirname, './swagger.yaml')
+const swaggerDoc = YAML.load(swaggerPath)
+
+const swaggerCss = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
 
 //others
 const connectDB = require('./db/connect') //db
@@ -38,8 +45,14 @@ app.use(xss())
 
 connectDB()
 
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc,{customCssUrl:swaggerCss}))
 app.get('/', (req, res)=>{
     res.send('CongratsBro API')
+
+    res.send('<h1>CongratsBro API</h1><p>This is an API for making posts relating to your achievements, connecting with friends and also viewing their posts </p>\
+    <p>There is no front-end currently for the app, its a purely a backend app</p>\
+    <p><i><u><a href="/api-docs">for more detailed documentation click here</a></i></u></p>\
+    <h3><p><b>Made by <i><a href="https://github.com/MOA-CODES">MOA-CODES</a></i></b></P></h3>')
 })
 
 app.use('/api/v1/auth', auth_R)
