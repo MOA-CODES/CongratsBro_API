@@ -7,7 +7,7 @@ info:
     email: moa.businessbread@gmail.com
   version: '1.0'
 servers:
-- url: <place the correct url here>
+- url: https://congrats-bro-api.vercel.app/
   variables: {}
 paths:
   /auth/register:
