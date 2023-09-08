@@ -4,7 +4,7 @@ const customError = require('../middleware/customError')
 
 const createPost = async (req, res)=>{
     req.body.postedBy = req.user.userId
-    req.body.user = req.user.email
+    req.body.username = req.user.name //changed email to username
 
     const post = await Post.create({...req.body})
     res.status(StatusCodes.CREATED).json(post)
@@ -61,28 +61,55 @@ const getSinglePost = async (req, res)=>{
 
 }
 
-const getPosts = async (req, res)=>{
-    //gets posts from user and users friends 
+const getPosts = async (req, res)=>{//get your posts and that of friends
+    //adding search functionality in title and content
+    const {title, content, username} = req.query;
+
     const friends = req.user.friends
 
-    console.log(friends)
+    const queryobject = {}
 
-    const posts = await Post.find({postedBy:friends})   
+    queryobject.postedBy = friends
+
+    if(title){
+        queryobject.title = {$regex: title, $options: 'i'}
+    }
+    if(content){
+        queryobject.content = {$regex: content, $options: 'i'}
+    }
+    if(username){
+        queryobject.username = {$regex: username, $options: 'i'}
+    }
+
+    const posts = await Post.find(queryobject).sort('createdAt')
 
     res.status(StatusCodes.OK).json({count: posts.length, posts})
 }
 
 const getMyPosts = async (req, res)=>{
     //gets posts only from user
-    const name = req.user.name
-    const userId = req.user.userId
-    const paramsuserId = req.params.uid
+    const{user:{userId}, params:{ uid:paramsuserId}, query:{title, content, username}}= req
 
     if(!(paramsuserId === userId)) {
         throw new customError('Authentication Invalid', StatusCodes.UNAUTHORIZED)
     }
 
-    const posts = await Post.find({postedBy:userId})   
+     //adding search functionality in title and content 
+     const queryobject = {}
+ 
+     queryobject.postedBy = userId
+ 
+     if(title){
+         queryobject.title = {$regex: title, $options: 'i'}
+     }
+     if(content){
+         queryobject.content = {$regex: content, $options: 'i'}
+     }
+     if(username){
+         queryobject.username = {$regex: username, $options: 'i'}
+     }
+
+    const posts = await Post.find(queryobject).sort('createdAt').select('_id title content updatedAt createdAt')    
 
     res.status(StatusCodes.OK).json({count: posts.length, posts})
 }

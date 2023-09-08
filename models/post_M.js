@@ -14,7 +14,7 @@ const PostSchema = new mongoose.Schema({
         minlength:15,
         maxLength: 150
     },
-    user:{
+    username:{
         type:String,
         ref:'User',
     },

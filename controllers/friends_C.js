@@ -68,7 +68,15 @@ const singleFriend = async (req, res) => { //you get a users/your friend public 
 }
 
 const allFriends = async (req, res) => {
-    const usersFriends = req.user.friends
+    const{user:{friends: usersFriends}, query:{name}} = req
+
+    const queryobject = {}
+
+    queryobject._id = usersFriends
+
+    if(name){
+        queryobject.name = {$regex: name, $options: 'i'}
+    }
 
     let message;
     if(usersFriends.length <= 1){
@@ -77,7 +85,7 @@ const allFriends = async (req, res) => {
         message = `${usersFriends.length} friends`
     }
 
-    const friends = await User.find({_id:usersFriends}).sort('name').select('_id name')
+    const friends = await User.find(queryobject).sort('name').select('_id name')
 
     res.status(StatusCodes.OK).json({msg:message,friends})
 }
