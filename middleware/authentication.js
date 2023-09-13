@@ -1,12 +1,14 @@
 const User = require('../models/user_M')
 const jwt = require('jsonwebtoken')
+const {StatusCodes} = require('http-status-codes')
+const customError = require('../middleware/customError')
 
 const auth = async (req, res, next)=>{
 
     //Using bearer token form of authentication
     const authHeader = req.headers.authorization
     if(!authHeader || !authHeader.startsWith('Bearer ')){
-        throw new Error('Authentication invalid')
+        throw new customError('Authentication invalid', StatusCodes.UNAUTHORIZED)
     }
 
     const token = authHeader.split(' ')[1]
@@ -18,7 +20,7 @@ const auth = async (req, res, next)=>{
         req.user = {userId:payload.userId, name:payload.name, email:payload.email, friends:payload.friends}
         next()
     }catch(err){
-        throw new Error('Authentication invalid')
+        throw new customError('Authentication invalid', StatusCodes.UNAUTHORIZED)
     }
 
 }
